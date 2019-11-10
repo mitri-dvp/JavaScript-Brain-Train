@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Nunito', sans-serif;
+  color: #333;
+}
+
+body {
+  height: 100vh;
+  background-image: linear-gradient(#ff260080, #ff260080), linear-gradient(316deg, rgba(111, 111, 111, 0.05) 0%, rgba(111, 111, 111, 0.05) 33.333%,rgba(22, 22, 22, 0.05) 33.333%, rgba(22, 22, 22, 0.05) 66.666%,rgba(163, 163, 163, 0.05) 66.666%, rgba(163, 163, 163, 0.05) 99.999%),linear-gradient(28deg, rgba(4, 4, 4, 0.05) 0%, rgba(4, 4, 4, 0.05) 33.333%,rgba(101, 101, 101, 0.05) 33.333%, rgba(101, 101, 101, 0.05) 66.666%,rgba(11, 11, 11, 0.05) 66.666%, rgba(11, 11, 11, 0.05) 99.999%),linear-gradient(268deg, rgba(222, 222, 222, 0.05) 0%, rgba(222, 222, 222, 0.05) 33.333%,rgba(194, 194, 194, 0.05) 33.333%, rgba(194, 194, 194, 0.05) 66.666%,rgba(122, 122, 122, 0.05) 66.666%, rgba(122, 122, 122, 0.05) 99.999%),linear-gradient(109deg, rgba(141, 141, 141, 0.05) 0%, rgba(141, 141, 141, 0.05) 33.333%,rgba(182, 182, 182, 0.05) 33.333%, rgba(182, 182, 182, 0.05) 66.666%,rgba(59, 59, 59, 0.05) 66.666%, rgba(59, 59, 59, 0.05) 99.999%),linear-gradient(90deg, rgb(221, 131, 111),rgb(254, 136, 141));
+}
+
+.math-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 3em;
+}
+.math-game input[type="submit"]{display: none;}
+.math-game input{
+}
+input:disabled{
+  background-color: #fff;
+}
+
+.math-game input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.math-game input {
+  font-size: 100%;
+  text-align: center;
+  height: 2em;
+  width: 2em;
+  border: 1px solid #888;
+  margin: 0.1em;
+}
+
+.ui {
+  font-size: 0.8em;
+  position: absolute;
+  top: 15%;
+  font-weight: bold;
+}
+.ui span:last-child{
+  font-size: 0.5em;
+  margin-top: 0.5em;
+  color: #fff;
+}
+.ui span{
+  text-align: center;
+  display: block;
+  color: red;
+}
+.ui.correct span {
+  color: limegreen;
+}
+
+
+.score {
+  color: #fff;
+  position: absolute;
+  bottom: 10%;
+  font-weight: bold;
+}
+
+.score span {
+  display: block; text-align: center;
+  border-top: 4px solid #fff;
+  padding-top: 0.2em;
+  color: #fff;
+}
+
+/*
+// Modal //
+*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000dd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal button {
+  width: 10em;
+  height: 2em;
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.2em;
+  border: 0;
+  border-radius: 0.2em;
+}
+.modal button:nth-child(1) {background-color: forestgreen; color: #fff;}
+.modal button:nth-child(2) {background-color: firebrick; color: #fff;}
+.modal button:nth-child(3) {background-color: #000; color: #555;}
