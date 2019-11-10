@@ -65,10 +65,16 @@ class Game {
         case 'x':
           result = Math.round(disabledValue * answerValue);
           solve = Math.floor((this.result.value / disabledValue) * 100) / 100;
+          if (solve % 1 > 0) {
+            console.log('fuck');
+          }
           break;
         case '÷':
           result = Math.floor((answerValue / disabledValue) * 100) / 100;
           solve = this.result.value * disabledValue;
+          if (solve % 1 > 0) {
+            console.log('fuck');
+          }
           break;
         default:
           return '';
@@ -86,16 +92,21 @@ class Game {
         case 'x':
           result = Math.round(disabledValue * answerValue);
           solve = Math.round((this.result.value / disabledValue) * 100) / 100;
+          if (solve % 1 > 0) {
+            console.log('fuck');
+          }
           break;
         case '÷':
           result = Math.floor(disabledValue / answerValue);
           solve = Math.floor((disabledValue / this.result.value) * 100) / 100;
+          if (solve % 1 > 0) {
+            console.log('fuck');
+          }
           break;
         default:
           return '';
       }
     }
-    console.log(result);
     if (result == this.result.value) {
       this.resetValues();
       this.ui.parentElement.classList.add('correct');
