@@ -115,9 +115,10 @@ input:disabled{
   border: 0;
   border-radius: 0.2em;
 }
-.modal button:nth-child(1) {background-color: forestgreen; color: #fff;}
-.modal button:nth-child(2) {background-color: firebrick; color: #fff;}
-.modal button:nth-child(3) {background-color: #000; color: #555;}
+.modal button:nth-child(1) {background-color: cornflowerblue; color: #fff;}
+.modal button:nth-child(2) {background-color: forestgreen; color: #fff;}
+.modal button:nth-child(3) {background-color: firebrick; color: #fff;}
+.modal button:nth-child(4) {background-color: #000; color: #555;}
 
 
 @media (max-height:490px) {
