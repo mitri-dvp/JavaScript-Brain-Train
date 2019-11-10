@@ -102,3 +102,10 @@ input:disabled{
 .modal button:nth-child(1) {background-color: forestgreen; color: #fff;}
 .modal button:nth-child(2) {background-color: firebrick; color: #fff;}
 .modal button:nth-child(3) {background-color: #000; color: #555;}
+
+
+@media (max-height:490px) {
+  .score {
+    bottom: 0%;
+  }
+}
