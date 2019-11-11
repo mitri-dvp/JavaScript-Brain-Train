@@ -86,14 +86,17 @@ class Game {
           return '';
       }
     }
+    if (this.correctAnswer == Infinity) {
+      this.resetValues();
+      return;
+    }
     if (hard) {
       form.style.visibility = 'visible';
       this.answer.focus();
     } else if (
       this.correctAnswer < 0 ||
       this.correctAnswer % 1 > 0 ||
-      this.correctAnswer == 0 ||
-      this.correctAnswer == Infinity
+      this.correctAnswer == 0
     ) {
       this.resetValues();
       return;
