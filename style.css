@@ -122,7 +122,8 @@ input:disabled{
     bottom: 0%;
   }
   .ui {
-    top: 0%;
+    top: 50%;
+    transform: translateY(-200%);
   }
 
 }
