@@ -127,3 +127,10 @@ input:disabled{
   }
 
 }
+
+
+@media (max-height:300px) {
+  :root{
+    font-size: 8px;
+  }
+}
