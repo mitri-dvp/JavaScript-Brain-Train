@@ -63,6 +63,7 @@ class Game {
           this.correctAnswer = Math.floor((this.result.value / disabledValue) * 100) / 100;
           break;
         case '÷':
+          this.correctAnswer = Math.floor(disabledValue * this.result.value * 100) / 100;
           break;
         default:
           return '';
