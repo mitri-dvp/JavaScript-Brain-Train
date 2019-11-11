@@ -61,21 +61,8 @@ class Game {
           break;
         case 'x':
           this.correctAnswer = Math.floor((this.result.value / disabledValue) * 100) / 100;
-          if (hard) {
-            break;
-          } else if (this.correctAnswer % 1 > 0) {
-            this.resetValues();
-            return;
-          }
           break;
         case '÷':
-          this.correctAnswer = this.result.value * disabledValue;
-          if (hard) {
-            break;
-          } else if (this.correctAnswer % 1 > 0) {
-            this.resetValues();
-            return;
-          }
           break;
         default:
           return '';
@@ -90,21 +77,9 @@ class Game {
           break;
         case 'x':
           this.correctAnswer = Math.round((this.result.value / disabledValue) * 100) / 100;
-          if (hard) {
-            break;
-          } else if (this.correctAnswer % 1 > 0) {
-            this.resetValues();
-            return;
-          }
           break;
         case '÷':
           this.correctAnswer = Math.floor((disabledValue / this.result.value) * 100) / 100;
-          if (hard) {
-            break;
-          } else if (this.correctAnswer % 1 > 0 || this.correctAnswer == 0) {
-            this.resetValues();
-            return;
-          }
           break;
         default:
           return '';
@@ -113,8 +88,14 @@ class Game {
     if (hard) {
       form.style.visibility = 'visible';
       this.answer.focus();
-    } else if (this.correctAnswer < 0) {
+    } else if (
+      this.correctAnswer < 0 ||
+      this.correctAnswer % 1 > 0 ||
+      this.correctAnswer == 0 ||
+      this.correctAnswer == Infinity
+    ) {
       this.resetValues();
+      return;
     }
     form.style.visibility = 'visible';
     this.answer.focus();
