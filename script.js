@@ -98,12 +98,22 @@ class Game {
       return;
     }
     form.style.visibility = 'visible';
+
     this.answer.focus();
   }
 
   checkAnswer(answer) {
     const answerValue = parseFloat(answer);
+    const prevQuestion = questionDiv.cloneNode(true);
+    prevQuestion.querySelectorAll('.answers').forEach(child => {
+      if (!child.disabled) {
+        child.classList.add('answered');
+        child.disabled = true;
+      }
+    });
     if (answerValue == this.correctAnswer) {
+      prevQuestion.classList.add('correct');
+      prevousQDiv.append(prevQuestion);
       this.resetValues();
       this.ui.parentElement.classList.add('correct');
       this.ui.innerHTML = 'Correct!';
@@ -111,11 +121,18 @@ class Game {
       this.scoreSpan.innerHTML = this.score;
       this.last.innerHTML = '';
     } else {
+      prevQuestion.classList.add('wrong');
+      prevousQDiv.append(prevQuestion);
       this.resetValues();
       this.ui.parentElement.classList.remove('correct');
       this.ui.innerHTML = 'Wrong!';
       this.last.innerHTML = `Correct answer was: ${this.correctAnswer}`;
     }
+    [...prevousQDiv.children].forEach((child, i) => {
+      if (i > 2) {
+        prevousQDiv.firstElementChild.remove();
+      }
+    });
   }
 }
 
@@ -128,6 +145,8 @@ const result = document.querySelector('.result');
 const ui = document.querySelector('.ui-answer');
 const last = document.querySelector('.last-answer');
 const score = document.querySelector('.score span');
+const questionDiv = document.querySelector('.question');
+const prevousQDiv = document.querySelector('.previous-results');
 let limit = 10;
 let game;
 let hard = false;

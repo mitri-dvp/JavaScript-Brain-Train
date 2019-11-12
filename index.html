@@ -14,16 +14,18 @@
 <body>
 
   <form class="math-game">
-    <input class="answers" type="number" step="0.01">
-    <div class="operator"></div>
-    <input class="answers" type="number" step="0.01">
-    <div>=</div>
-    <input class="result" type="number" value="" disabled>
-    <input type="submit" value="">
+    <div class="previous-results"></div>
+    <div class="question">
+      <input class="answers" type="number" step="0.01">
+      <div class="operator"></div>
+      <input class="answers" type="number" step="0.01">
+      <div>=</div>
+      <input class="result" type="number" value="" disabled>
+      <input type="submit" value="">
+    </div>
     <div class="ui"><span class="ui-answer"></span><span class="last-answer"></span></div>
     <div class="score">Score<span>0</span></div>
   </form>
-
 
   <form class="modal">
     <button class="e">Easy</button>
