@@ -1,6 +1,6 @@
 // Game
 class Game {
-  constructor(operator, answers, result, ui, last, score, limit) {
+  constructor(operator, answers, result, ui, last, score, limit, timer) {
     this.operator = operator;
     this.answers = answers;
     this.result = result;
@@ -10,17 +10,104 @@ class Game {
     this.score = 0;
     this.limit = limit;
     this.correctAnswer = '';
+    this.playing = true;
+    if (localStorage.getItem('leaderBoard')) {
+      this.leaderBoard = JSON.parse(localStorage.getItem('leaderBoard'));
+    } else {
+      this.leaderBoard = [];
+    }
     this.resetValues();
+    this.startCountdown();
+  }
+
+  startCountdown() {
+    this.interval = setInterval(() => {
+      timer.textContent = parseInt(timer.textContent) - 1;
+      if (timer.textContent < 0) {
+        timer.textContent = '0';
+        clearInterval(this.interval);
+        this.playing = false;
+        this.displayGameOver();
+      }
+    }, 1000);
+  }
+
+  displayGameOver() {
+    const gameOver = document.createElement('form');
+    gameOver.classList.add('game-over');
+    gameOver.innerHTML = `
+    <div>
+      <h1>Game Over</h1>
+      <h1>Enter Your Name!</h1>
+      <input type="text">
+    </div>`;
+    document.body.appendChild(gameOver);
+    gameOver.addEventListener('submit', e => {
+      // LeaderBoard
+      e.preventDefault();
+      this.leaderBoard.push({
+        name: gameOver.querySelector('input').value,
+        score: this.score,
+        speed: Math.floor((this.score / 30) * 100) / 100
+      });
+      this.leaderBoardSorted = this.leaderBoard.sort((a, b) => (a.score > b.score ? -1 : 1));
+      localStorage.setItem('leaderBoard', JSON.stringify(this.leaderBoard));
+      gameOver.innerHTML = `
+      <div>
+        <h1>Leader Board</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Score</th>
+              <th>Speed</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+       </div>`;
+      this.leaderBoardSorted.forEach((e, i) => {
+        if (i > 4) {
+          return 0;
+        }
+        gameOver.querySelector('tbody').innerHTML += `
+          <tr>
+            <td>${e.name}</td>
+            <td>${e.score}</td>
+            <td>${e.speed}</td>
+          </tr>`;
+      });
+      // Reset
+      gameOver.addEventListener('click', e => {
+        if (e.target.className.match('game-over')) {
+          gameOver.remove();
+          this.score = 0;
+          this.scoreSpan.innerHTML = this.score;
+          timer.textContent = 30;
+          this.playing = true;
+          this.startCountdown();
+          this.resetValues();
+          [...prevousQDiv.children].forEach(child => {
+            prevousQDiv.firstElementChild.remove();
+          });
+        }
+      });
+    });
   }
 
   resetValues() {
-    setTimeout(() => {
-      this.answers.forEach(answer => {
-        answer.value = null;
-        answer.disabled = false;
-      });
-      this.displayQuestion();
-    }, 0);
+    if (this.playing) {
+      setTimeout(() => {
+        this.answers.forEach(answer => {
+          answer.value = null;
+          answer.disabled = false;
+        });
+        this.displayQuestion();
+      }, 0);
+    } else {
+      clearInterval(this.countdown);
+    }
   }
 
   displayQuestion() {
@@ -103,6 +190,9 @@ class Game {
   }
 
   checkAnswer(answer) {
+    if (!this.playing) {
+      return;
+    }
     const answerValue = parseFloat(answer);
     const prevQuestion = questionDiv.cloneNode(true);
     prevQuestion.querySelectorAll('.answers').forEach(child => {
@@ -147,6 +237,7 @@ const last = document.querySelector('.last-answer');
 const score = document.querySelector('.score span');
 const questionDiv = document.querySelector('.question');
 const prevousQDiv = document.querySelector('.previous-results');
+const timer = document.querySelector('.timer');
 let limit = 10;
 let game;
 let hard = false;
@@ -180,5 +271,5 @@ modal.addEventListener('click', e => {
   }
   modal.remove();
   // Init game
-  game = new Game(operator, answers, result, ui, last, score, limit);
+  game = new Game(operator, answers, result, ui, last, score, limit, timer);
 });

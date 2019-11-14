@@ -93,6 +93,7 @@ input:disabled{
   position: absolute;
   bottom: 10%;
   font-weight: bold;
+  right: 55%;
 }
 
 .score span {
@@ -100,6 +101,16 @@ input:disabled{
   padding-top: 0.2em;
 }
 
+.score:last-of-type {
+  color: #555;
+  left: 55%;
+  width: fit-content;
+}
+.score:last-of-type span {
+  color: #555;
+  display: block; text-align: center;
+  padding-top: 0.2em;
+}
 /*
 // Modal //
 */
@@ -139,8 +150,47 @@ input:disabled{
 .modal button:nth-child(3) {background-color: firebrick; color: #fff;}
 .modal button:nth-child(4) {background-color: #000; color: #555;}
 
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #000000dd;
+}
+.game-over h1:first-of-type{color: rgb(255, 37, 37); font-size: 250%;font-weight: bolder;}
+.game-over h1{color: #fff; font-size: 200%;font-weight: normal;}
+.game-over input{
+  width: 15rem;
+  border: 1px solid #333;
+  border-radius: 2rem;
+  outline: none;
+  padding: 0.4rem;
+  text-align: center;
+  font-size: 150%;
+}
+.game-over table {
+  width: 400px;
+  font-size: 150%;
+}
+.game-over thead, .game-over tbody {
+  background-color: #fff;
+  border-bottom: 2px solid #000;
+}
+.game-over thead {background-color: rgb(255, 37, 37);;}
+.game-over td, .game-over th {padding: 0.5em;text-align: center;}
+.game-over th {color: #fff;}
+
 
 @media (max-height:600px) {
+  .game-over table {
+    width: 300px;
+    font-size: 100%;
+  }
   .score {
     bottom: 0%;
   }
