@@ -7,7 +7,7 @@ The objective of this game is to write the **correct answer** to the displayed *
     - **Medium**: All of the **Arithmetic Operations** questions with **One** digit numbers will be displayed.  
     - **Hard**: Same rules as **Medium** but the correct answer does not have a range limit (even negative numbers can be the answer).  
     - **🔥Imposible🔥**: Same rules as **Hard** but with **Two** digit number questions.  
-  - No time limit. 
+  - Time limit of **30s**. 
 
 This was made with only pure **vanilla JavaScript**.  
   
