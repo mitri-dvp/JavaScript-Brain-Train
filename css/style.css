@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+:focus{
+  outline: 2px solid #888;
+  outline-offset: 1px;
+}
+
+body {
+  height: 100vh;
+  background-image: linear-gradient(#ff260080, #ff260080), linear-gradient(316deg, rgba(111, 111, 111, 0.05) 0%, rgba(111, 111, 111, 0.05) 33.333%,rgba(22, 22, 22, 0.05) 33.333%, rgba(22, 22, 22, 0.05) 66.666%,rgba(163, 163, 163, 0.05) 66.666%, rgba(163, 163, 163, 0.05) 99.999%),linear-gradient(28deg, rgba(4, 4, 4, 0.05) 0%, rgba(4, 4, 4, 0.05) 33.333%,rgba(101, 101, 101, 0.05) 33.333%, rgba(101, 101, 101, 0.05) 66.666%,rgba(11, 11, 11, 0.05) 66.666%, rgba(11, 11, 11, 0.05) 99.999%),linear-gradient(268deg, rgba(222, 222, 222, 0.05) 0%, rgba(222, 222, 222, 0.05) 33.333%,rgba(194, 194, 194, 0.05) 33.333%, rgba(194, 194, 194, 0.05) 66.666%,rgba(122, 122, 122, 0.05) 66.666%, rgba(122, 122, 122, 0.05) 99.999%),linear-gradient(109deg, rgba(141, 141, 141, 0.05) 0%, rgba(141, 141, 141, 0.05) 33.333%,rgba(182, 182, 182, 0.05) 33.333%, rgba(182, 182, 182, 0.05) 66.666%,rgba(59, 59, 59, 0.05) 66.666%, rgba(59, 59, 59, 0.05) 99.999%),linear-gradient(90deg, rgb(221, 131, 111),rgb(254, 136, 141));
+  color: #333;
+  background: none;
+}
+
+.math-game {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  font-size: 3em;
+}
+.question {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.question > * {
+  color: #333;
+}
+.previous-results {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 55vh;
+}
+.previous-results > *:nth-last-child(1){opacity: 0.6; transform: scale(0.7);} 
+.previous-results > *:nth-last-child(2){opacity: 0.3; transform: scale(0.5); bottom: -1em;} 
+.previous-results > *:nth-last-child(3){opacity: 0.15; transform: scale(0.3);bottom: -2.5em;} 
+.previous-results > *{opacity: 0; transform: scale(0.0);position: relative; z-index: 1;} 
+
+.question.correct {border:1px solid #4cd137;}
+.question.wrong {border:1px solid #f33;}
+
+.question.correct .answered{color: #4cd137;}
+.question.wrong .answered{color: #f33;}
+
+.math-game input[type="submit"]{display: none;}
+.math-game input{
+}
+input:disabled{
+  background-color: #fff;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+.math-game input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.math-game input {
+  font-size: 100%;
+  text-align: center;
+  height: 2em;
+  width: 2em;
+  border: 1px solid #888;
+  margin: 0.1em;
+}
+
+.ui {
+  font-size: 0.8em;
+  position: absolute;
+  top: 15%;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: grid;
+  visibility: hidden;
+}
+.ui.correct,
+.ui.wrong {
+  visibility: visible;
+}
+.ui span:last-child{
+  font-size: 0.5em;
+}
+.ui span{
+  text-align: center;
+  display: block;
+  color: #f33;
+}
+.ui.correct span {
+  color: #4cd137;
+}
+
+.time,
+.score {
+  position: absolute;
+  bottom: 50%;
+  font-weight: bold;
+  transform: translateX(-50%) translateY(200%);
+  text-transform: uppercase;
+  font-size: 2.5rem;
+  width: 10rem;
+  text-align: center;
+}
+.time {
+  transform: translateX(50%) translateY(200%);
+}
+
+.time span,
+.score span {
+  display: block;
+  text-align: center;
+}
+/*
+// Modal //
+*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000dd;
+  background-color: #fff;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  text-transform: uppercase;
+  gap: 1.5rem;
+  /* display: none; */
+}
+.modal.hide {
+  display: none;
+}
+.modal > div {
+  cursor: default;
+}
+.modal .title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.modal .title h1 {
+  color: #000;
+  background-image: url('./brain.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  padding: 2rem 0;
+}
+.modal .title span {
+  display: block;
+  font-size: 1rem;
+}
+.modal .help {
+  width: max-content;
+  margin: auto;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal .select {
+  text-align: center
+}
+
+.modal .buttons {
+  display: grid;
+  gap: 0.5rem;
+  width: max-content;
+  margin: auto;
+}
+.modal .buttons button {
+  width: 15rem;
+  height: 4rem;
+  font-size: 1.5rem;
+  border: 0;
+  border-radius: 50rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  text-transform: uppercase;
+}
+.modal .buttons button:nth-child(1) {background-color: #00a8ff; color: #fff;}
+.modal .buttons button:nth-child(2) {background-color: #4cd137; color: #fff;}
+.modal .buttons button:nth-child(3) {background-color: #e84118; color: #fff;}
+.modal .buttons button:nth-child(4) {background-color: #000; color: #fff;}
+.modal .buttons button:active {
+  transform: scale(0.95);
+}
+
+.instructions {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: #fff;
+  z-index: 2;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+.instructions.hide {
+  display: none;
+}
+
+.instructions-card {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+  max-width: 20rem;
+}
+.instructions-card > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.instructions-card .icon {
+  text-transform: uppercase;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 2rem;
+  user-select: none;
+  cursor: default;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+.instructions-card .easy .icon{background-color: #00a8ff;}
+.instructions-card .medium .icon{background-color: #4cd137;}
+.instructions-card .hard .icon{background-color: #e84118;}
+.instructions-card .impossible .icon{background-color: #000;}
+
+.exit-instructions {
+  cursor: pointer;
+  text-decoration: underline;
+  width: max-content;
+  margin: auto;
+  text-align: center;
+}
+
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #000000dd;
+}
+.game-over .enter-name h2 {color: #f33; font-size: 250%;font-weight: bolder;}
+.game-over .enter-name h1{color: #fff; font-size: 200%;font-weight: normal;}
+.enter-name {
+  display: grid;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: #fff;
+}
+.enter-name > * {
+  cursor: default;
+}
+.enter-name .options {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+
+}
+.enter-name .change,
+.enter-name .retry {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.game-over input{
+  cursor: auto;
+  width: 15rem;
+  border: 1px solid #333;
+  border-radius: 2rem;
+  outline: none;
+  padding: 0.4rem;
+  text-align: center;
+  font-size: 150%;
+}
+.game-over table {
+  max-width: 400px;
+  font-size: 150%;
+}
+.game-over thead, .game-over tbody {
+  background-color: #fff;
+  border-bottom: 2px solid #000;
+}
+.game-over thead {background-color: #f33;}
+.game-over td, .game-over th {padding: 0.5em;text-align: center;}
+.game-over th {color: #fff;}
+
+.leaderboard {
+  display: grid;
+  gap: 1rem;
+  position: relative;
+}
+.leaderboard > div,
+.leaderboard > h1 {
+  color: #fff;
+  text-transform: uppercase;
+}
+.leaderboard .options {
+  position: absolute;
+  right: 0;
+  text-align: left;
+  display: grid;
+  gap: 1rem;
+  transform: translateX(100%);
+  padding-left: 1rem;
+  padding-top: 4rem;
+}
+.leaderboard .options h3 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+@media (max-height:600px) {
+  .game-over table {
+    width: 300px;
+    font-size: 100%;
+  }
+  .score {
+    bottom: 0%;
+  }
+  .ui {
+    top: 50%;
+    transform: translateY(-200%);
+  }
+  .previous-results > *:nth-last-child(1){opacity: 0; transform: scale(0.7);} 
+  .previous-results > *:nth-last-child(2){opacity: 0; transform: scale(0.5); bottom: -1em;} 
+  .previous-results > *:nth-last-child(3){opacity: 0; transform: scale(0.3);bottom: -2.5em;} 
+
+
+}
+
+@media (max-width:800px) {
+  .leaderboard .options {
+    all: unset;
+    color: #fff;
+    text-transform: uppercase;
+    display: grid;
+    gap: 1rem;
+  }
+}
+@media (max-width:500px) {
+  .leaderboard {
+    max-width: 90%;
+    margin: auto;
+    font-size: 14px;
+  }
+}
+
+@media (max-width:400px) {
+  :root{
+    font-size: 14px;
+  }
+}

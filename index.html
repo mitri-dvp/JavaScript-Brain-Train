@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Brain Train</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="icon"
-    href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/233/brain_1f9e0.png">
+    href="./css/brain.png">
 </head>
 
 <body>
@@ -25,16 +25,44 @@
     </div>
     <div class="ui"><span class="ui-answer"></span><span class="last-answer"></span></div>
     <div class="score">Score<span>0</span></div>
-    <div class="score">Time<span class="timer">30</span></div>
+    <div class="time">Time<span class="timer">30</span></div>
   </form>
 
   <form class="modal">
-    <button class="e">Easy</button>
-    <button class="m">Medium</button>
-    <button class="h">Hard</button>
-    <button class="i">🔥 Impossible 🔥</button>
+    <div class="title"><span>Welcome to</span><h1>Brain Train</h1></div>
+    <div class="select">select difficulty:</div>
+    <div class="buttons">
+      <button class="e">Easy</button>
+      <button class="m">Medium</button>
+      <button class="h">Hard</button>
+      <button class="i">🔥Impossible🔥</button>
+    </div>
+    <div class="help">?</div>
   </form>
-  <script src="script.js"></script>
+
+  <div class="instructions hide">
+    <div class="instructions-card">
+        <div class="easy">
+          <div class="icon">e</div>
+          <div>Questions with only <strong>Addition</strong> and <strong>Subtraction</strong> operators and <strong>One-Digit</strong> numbers will be displayed.</div>
+        </div>
+      <div class="medium">
+        <div class="icon">m</div>
+        <div>Questions with all <strong>Arithmetic Operators</strong> and <strong>One-Digit</strong> numbers will be displayed.</div>
+      </div>
+      <div class="hard">
+        <div class="icon">h</div>
+        <div>Same rules as <strong>Medium</strong> but the correct answer does not have a <strong>Range Limit</strong> (even negative numbers can be the answer).</div>
+      </div>
+      <div class="impossible">
+        <div class="icon">i</div>
+        <div>Same rules as <strong>Hard</strong> but with <strong>Two-Digit</strong> number questions.</div>
+      </div>
+      <span class="exit-instructions">X</span>
+
+  </div>
+  </div>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>

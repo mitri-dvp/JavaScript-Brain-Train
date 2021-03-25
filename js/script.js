@@ -1,4 +1,4 @@
-// Game
+// GAME
 class Game {
   constructor(operator, answers, result, ui, last, score, limit, timer) {
     this.operator = operator;
@@ -33,15 +33,23 @@ class Game {
   }
 
   displayGameOver() {
+    ding_sfx.currentTime = 0
+    ding_sfx.play()
     const gameOver = document.createElement('form');
     gameOver.classList.add('game-over');
     gameOver.innerHTML = `
-    <div>
-      <h1>Game Over</h1>
-      <h1>Enter Your Name!</h1>
+    <div class="enter-name">
+      <h2>GAME OVER</h2>
+      <h3>Enter your name!</h3>
       <input type="text">
+      <div class='options'>
+        <h3 class="change">Change Difficulty</h3>
+        <h3 class="retry">Retry</h3>
+      </div>
     </div>`;
     document.body.appendChild(gameOver);
+    document.body.querySelector('.change').addEventListener('click', ()=> {this.changeDifficulty()})
+    document.body.querySelector('.retry').addEventListener('click', ()=> {this.startGame()})
     gameOver.addEventListener('submit', e => {
       // LeaderBoard
       e.preventDefault();
@@ -53,7 +61,7 @@ class Game {
       this.leaderBoardSorted = this.leaderBoard.sort((a, b) => (a.score > b.score ? -1 : 1));
       localStorage.setItem('leaderBoard', JSON.stringify(this.leaderBoard));
       gameOver.innerHTML = `
-      <div>
+      <div class='leaderboard'>
         <h1>Leader Board</h1>
         <table>
           <thead>
@@ -66,7 +74,12 @@ class Game {
           <tbody>
           </tbody>
         </table>
-       </div>`;
+        <div class='options'>
+          <h3 class="change">Change</h3>
+          <h3 class="retry">Retry</h3>
+        </div>
+       </div>
+       `;
       this.leaderBoardSorted.forEach((e, i) => {
         if (i > 4) {
           return 0;
@@ -75,22 +88,16 @@ class Game {
           <tr>
             <td>${e.name}</td>
             <td>${e.score}</td>
-            <td>${e.speed}</td>
+            <td>${e.speed} a/s</td>
           </tr>`;
       });
-      // Reset
+      // RESET
       gameOver.addEventListener('click', e => {
-        if (e.target.className.match('game-over')) {
-          gameOver.remove();
-          this.score = 0;
-          this.scoreSpan.innerHTML = this.score;
-          timer.textContent = 30;
-          this.playing = true;
-          this.startCountdown();
-          this.resetValues();
-          [...prevousQDiv.children].forEach(child => {
-            prevousQDiv.firstElementChild.remove();
-          });
+        if (e.target.className.match('change')) {
+          this.changeDifficulty()
+        }
+        if (e.target.className.match('retry')) {
+          this.startGame()
         }
       });
     });
@@ -202,19 +209,25 @@ class Game {
       }
     });
     if (answerValue == this.correctAnswer) {
+      correct_sfx.currentTime = 0
+      correct_sfx.play()
       prevQuestion.classList.add('correct');
       prevousQDiv.append(prevQuestion);
       this.resetValues();
+      this.ui.parentElement.classList.remove('wrong');
       this.ui.parentElement.classList.add('correct');
       this.ui.innerHTML = 'Correct!';
       this.score++;
       this.scoreSpan.innerHTML = this.score;
       this.last.innerHTML = '';
     } else {
+      wrong_sfx.currentTime = 0
+      wrong_sfx.play()
       prevQuestion.classList.add('wrong');
       prevousQDiv.append(prevQuestion);
       this.resetValues();
       this.ui.parentElement.classList.remove('correct');
+      this.ui.parentElement.classList.add('wrong');
       this.ui.innerHTML = 'Wrong!';
       this.last.innerHTML = `Correct answer was: ${this.correctAnswer}`;
     }
@@ -223,6 +236,32 @@ class Game {
         prevousQDiv.firstElementChild.remove();
       }
     });
+  }
+
+  resetGame() {
+    document.body.querySelector('.game-over')?.remove();
+    this.score = 0;
+    this.scoreSpan.innerHTML = this.score;
+    timer.textContent = 30;
+    this.ui.parentElement.classList.remove('wrong');
+    this.ui.parentElement.classList.remove('correct');
+    [...prevousQDiv.children].forEach(child => {
+      prevousQDiv.firstElementChild.remove();
+    });
+  }
+  changeDifficulty() {
+    select_sfx.currentTime = 0
+    select_sfx.play()
+    modal.classList.remove('hide')
+    this.resetGame()
+  }
+  startGame() {
+    select_sfx.currentTime = 0
+    select_sfx.play()
+    this.resetGame()
+    this.playing = true;
+    this.startCountdown();
+    this.resetValues();
   }
 }
 
@@ -238,12 +277,21 @@ const score = document.querySelector('.score span');
 const questionDiv = document.querySelector('.question');
 const prevousQDiv = document.querySelector('.previous-results');
 const timer = document.querySelector('.timer');
+const help = document.querySelector('.help');
+const instructions = document.querySelector('.instructions');
+const exitInstructions = document.querySelector('.exit-instructions');
 let limit = 10;
 let game;
 let hard = false;
 // Modal
 const modal = document.querySelector('.modal');
+// Sounds
+const correct_sfx = new Audio('./css/sounds/correct.mp3');
+const wrong_sfx = new Audio('./css/sounds/wrong.mp3');
+const select_sfx = new Audio('./css/sounds/select.mp3');
+const ding_sfx = new Audio('./css/sounds/ding.mp3');
 
+// Event listeners
 form.addEventListener('submit', answer);
 function answer(e) {
   e.preventDefault();
@@ -254,22 +302,53 @@ function answer(e) {
   });
 }
 
+help.addEventListener('click', showInstructions)
+function showInstructions() {
+  select_sfx.currentTime = 0
+  select_sfx.play()
+  instructions.classList.remove('hide')
+}
+
+exitInstructions.addEventListener('click', hideInstructions)
+function hideInstructions() {
+  select_sfx.currentTime = 0
+  select_sfx.play()
+  instructions.classList.add('hide')
+}
+
 modal.addEventListener('click', e => {
   e.preventDefault();
   const selection = e.target.className;
-  if (selection == 'e') {
-    operators = ['+', '-'];
-  } else if (selection == 'm') {
-    operators = ['+', '-', 'x', '÷'];
-  } else if (selection == 'h') {
-    operators = ['+', '-', 'x', '÷'];
-    hard = true;
-  } else if (selection == 'i') {
-    operators = ['+', '-', 'x', '÷'];
-    hard = true;
-    limit = 99;
+  switch (selection) {
+    case 'e':
+      operators = ['+', '-'];   
+      break;
+    case 'm':
+      operators = ['+', '-', 'x', '÷'];      
+      break;
+    case 'h':
+      operators = ['+', '-', 'x', '÷'];      
+      break;
+    case 'i':
+      operators = ['+', '-', 'x', '÷'];     
+      hard = true;
+      limit = 99; 
+      break;
+  
+    default:
+      return
   }
-  modal.remove();
+
+  modal.classList.add('hide');
+  select_sfx.currentTime = 0
+  select_sfx.play()
+
   // Init game
-  game = new Game(operator, answers, result, ui, last, score, limit, timer);
+  if(game) {
+    game.limit = limit
+    game.startGame()
+  } else {
+
+    game = new Game(operator, answers, result, ui, last, score, limit, timer);
+  }
 });
