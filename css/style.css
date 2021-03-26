@@ -159,7 +159,7 @@ input[type=number] {
 }
 .modal .title h1 {
   color: #000;
-  background-image: url('./brain.png');
+  background-image: url('./brain.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
