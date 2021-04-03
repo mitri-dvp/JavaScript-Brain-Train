@@ -380,3 +380,35 @@ input[type=number] {
     font-size: 14px;
   }
 }
+
+/* Powered By */
+.powered-by img {
+  display: block;
+  height: 48px;
+}
+.powered-by p:first-of-type {
+  display: inline;
+  color:  #3328fe;
+}
+.powered-by p {
+  display: inline;
+  color:  #3328fe;
+}
+.powered-by {
+  background-color: #fff;
+  font-size: 16px;
+  position: fixed;
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  box-shadow: 0px 2px 6px 3px #33333330;
+  bottom: 0;
+  z-index: 99;
+  text-decoration: none;
+}
+
