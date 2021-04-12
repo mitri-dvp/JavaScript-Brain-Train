@@ -322,12 +322,18 @@ modal.addEventListener('click', e => {
   switch (selection) {
     case 'e':
       operators = ['+', '-'];   
+      hard = false;
+      limit = 10; 
       break;
     case 'm':
       operators = ['+', '-', 'x', '÷'];      
+      hard = false;
+      limit = 10; 
       break;
     case 'h':
       operators = ['+', '-', 'x', '÷'];      
+      hard = false;
+      limit = 10; 
       break;
     case 'i':
       operators = ['+', '-', 'x', '÷'];     
