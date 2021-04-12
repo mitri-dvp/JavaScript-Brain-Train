@@ -332,7 +332,7 @@ modal.addEventListener('click', e => {
       break;
     case 'h':
       operators = ['+', '-', 'x', '÷'];      
-      hard = false;
+      hard = true;
       limit = 10; 
       break;
     case 'i':
